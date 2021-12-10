@@ -3,12 +3,12 @@ package com.example.positivesns.service
 import com.example.positivesns.model.dynamo.Post
 import com.example.positivesns.repository.PostRepository
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class PostServiceImpl(
     private val datetimeService: DatetimeService,
     private val postRepository: PostRepository,
+    private val uuidService: UuidService,
 ) : PostService {
     override fun insertPost(
         userId: String,
@@ -18,14 +18,14 @@ class PostServiceImpl(
         postRepository.insertPost(post)
     }
 
-    private fun createPost(
+    fun createPost(
         userId: String,
         text: String,
     ): Post {
         val datetime = datetimeService.getCurrentTime()
         return Post(
             userId = userId,
-            postId = UUID.randomUUID().toString().replace("-", ""),
+            postId = uuidService.getUuid().replace("-", ""),
             text = text,
             registeredTime = datetime.toInstant().toEpochMilli(),
             updatedTime = datetime.toInstant().toEpochMilli(),
