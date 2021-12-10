@@ -1,5 +1,8 @@
 package com.example.positivesns.service
 
 interface PostService {
-    fun insertPost()
+    fun insertPost(
+        userId: String,
+        text: String,
+    )
 }
