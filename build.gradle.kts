@@ -32,6 +32,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
 
+	// https://mvnrepository.com/artifact/io.mockk/mockk
+	testImplementation("io.mockk:mockk:1.12.1")
 }
 
 tasks.withType<KotlinCompile> {
