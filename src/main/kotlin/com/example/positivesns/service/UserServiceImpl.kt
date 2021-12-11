@@ -14,12 +14,12 @@ class UserServiceImpl(
     private val passwordService: PasswordService,
     private val userRepository: UserRepository,
 ) : UserService {
-    override fun insertUser(userId: String, username: String, password: String) : Int {
+    override fun insertUser(userId: String, username: String, password: String) : Boolean {
         val user = userRepository.getUser(userId)
-        if (user !== null) return -999
+        if (user !== null) return false
 
         userRepository.insertUser(createUser(userId, username, password))
-        return 1
+        return true
     }
 
     override fun auth(userId: String, password: String): UserResponse {
@@ -49,8 +49,20 @@ class UserServiceImpl(
         )
     }
 
-    override fun deleteUser(userId: String) {
-        TODO("Not yet implemented")
+    override fun deleteUser(userId: String, password: String) : Boolean {
+        val user = userRepository.getUser(userId) ?: return false
+        val result = user.password?.let { passwordService.isSamePassword(password, it) }
+
+        // if the password does not match with the one registered in DB
+        if ((result == null) || !result) {
+            return false
+        }
+
+        val deleteToUser = User(
+            userId = userId,
+        )
+        userRepository.deleteUser(deleteToUser)
+        return true
     }
 
     override fun updateUser(userId: String,

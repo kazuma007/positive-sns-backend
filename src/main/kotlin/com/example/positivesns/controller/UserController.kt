@@ -32,8 +32,10 @@ class UserController(
         password: String,
     ): UpdateProcessResponse {
         val result = userService.insertUser(userId, username, password)
-        if (result < 0) return UpdateProcessResponse(result = "fail")
-        return UpdateProcessResponse(result = "success")
+        if (result) {
+            return UpdateProcessResponse(result = "success")
+        }
+        return UpdateProcessResponse(result = "fail")
     }
 
     @GetMapping(
@@ -66,5 +68,22 @@ class UserController(
         newPassword: String,
     ): UserResponse {
         return userService.updateUser(userId, username, currentPassword, newPassword)
+    }
+
+    @GetMapping(
+        path = ["delete"]
+    )
+    fun deleteUser(
+        @RequestParam("userId")
+        userId: String,
+
+        @RequestParam("password")
+        password: String,
+    ): UpdateProcessResponse {
+        val result = userService.deleteUser(userId, password)
+        if (result) {
+            return UpdateProcessResponse(result = "success")
+        }
+        return UpdateProcessResponse(result = "fail")
     }
 }

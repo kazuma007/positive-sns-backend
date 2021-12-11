@@ -7,7 +7,7 @@ interface UserService {
         userId: String,
         username: String,
         password: String,
-    ): Int
+    ): Boolean
 
     fun auth(
         userId: String,
@@ -16,7 +16,8 @@ interface UserService {
 
     fun deleteUser(
         userId: String,
-    )
+        password: String,
+    ): Boolean
 
     fun updateUser(
         userId: String,
