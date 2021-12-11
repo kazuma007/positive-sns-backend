@@ -15,6 +15,10 @@ class PostRepositoryImpl : PostRepository {
         mapper.save(post)
     }
 
+    override fun deletePost(post: Post) {
+        mapper.delete(post)
+    }
+
     override fun getPosts(): List<Post> {
         val scanExpression = DynamoDBScanExpression()
         return mapper.parallelScan(Post::class.java, scanExpression, 2)

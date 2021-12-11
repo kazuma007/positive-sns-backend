@@ -2,7 +2,7 @@ package com.example.positivesns.response.post
 
 import java.time.ZonedDateTime
 
-data class PostGetResponse(
+data class PostListResponse(
     var userId: String = "",
     var postId: String = "",
     var text: String = "",

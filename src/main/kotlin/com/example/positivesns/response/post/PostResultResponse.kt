@@ -1,5 +1,5 @@
 package com.example.positivesns.response.post
 
-data class PostInsertResponse(
+data class PostResultResponse(
     val result: String,
 )

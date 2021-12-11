@@ -2,7 +2,7 @@ package com.example.positivesns.service
 
 import com.example.positivesns.model.dynamo.Post
 import com.example.positivesns.repository.PostRepository
-import com.example.positivesns.response.post.PostGetResponse
+import com.example.positivesns.response.post.PostListResponse
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -80,14 +80,14 @@ internal class PostServiceImplTest {
         )
 
         val expected = listOf(
-            PostGetResponse(
+            PostListResponse(
                 userId = "sample-user",
                 text = "sample test 2",
                 postId = "5849b4076c56783dd41b28baf93374cf",
                 registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
                 updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
             ),
-            PostGetResponse(
+            PostListResponse(
                 userId = "sample-user",
                 text = "sample test 1",
                 postId = "41b28baf93374cf5849b4076c56783dd",
@@ -126,14 +126,14 @@ internal class PostServiceImplTest {
         )
 
         val expected = listOf(
-            PostGetResponse(
+            PostListResponse(
                 userId = "sample-user-2",
                 text = "sample test 2",
                 postId = "5849b4076c56783dd41b28baf93374cf",
                 registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
                 updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
             ),
-            PostGetResponse(
+            PostListResponse(
                 userId = "sample-user-1",
                 text = "sample test 1",
                 postId = "41b28baf93374cf5849b4076c56783dd",
