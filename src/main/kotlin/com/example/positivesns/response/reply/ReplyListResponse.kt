@@ -1,4 +1,4 @@
-package com.example.positivesns.response.post
+package com.example.positivesns.response.reply
 
 import java.time.ZonedDateTime
 

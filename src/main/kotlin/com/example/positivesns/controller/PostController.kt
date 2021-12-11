@@ -1,7 +1,7 @@
 package com.example.positivesns.controller
 
 import com.example.positivesns.response.post.PostListResponse
-import com.example.positivesns.response.post.PostResultResponse
+import com.example.positivesns.response.UpdateProcessResponse
 import com.example.positivesns.service.PostService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,9 +27,9 @@ class PostController(
 
         @RequestParam("text")
         text: String,
-    ): PostResultResponse {
+    ): UpdateProcessResponse {
         postService.insertPost(userId, text)
-        return PostResultResponse(result = "success")
+        return UpdateProcessResponse(result = "success")
     }
 
     @GetMapping(
@@ -48,9 +48,9 @@ class PostController(
     fun deletePost(
         @RequestParam("postId")
         postId: String,
-    ): PostResultResponse {
+    ): UpdateProcessResponse {
         postService.deletePost(postId)
-        return PostResultResponse(result = "success")
+        return UpdateProcessResponse(result = "success")
     }
 
     @GetMapping(
@@ -62,8 +62,8 @@ class PostController(
 
         @RequestParam("postId")
         postId: String,
-    ): PostResultResponse {
+    ): UpdateProcessResponse {
         postService.updatePost(postId, text)
-        return PostResultResponse(result = "success")
+        return UpdateProcessResponse(result = "success")
     }
 }

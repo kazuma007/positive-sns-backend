@@ -2,7 +2,7 @@ package com.example.positivesns.service
 
 import com.example.positivesns.model.dynamo.Reply
 import com.example.positivesns.repository.ReplyRepository
-import com.example.positivesns.response.post.ReplyListResponse
+import com.example.positivesns.response.reply.ReplyListResponse
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs

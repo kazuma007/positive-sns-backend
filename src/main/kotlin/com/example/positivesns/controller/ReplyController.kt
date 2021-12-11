@@ -1,7 +1,7 @@
 package com.example.positivesns.controller
 
-import com.example.positivesns.response.post.PostResultResponse
-import com.example.positivesns.response.post.ReplyListResponse
+import com.example.positivesns.response.UpdateProcessResponse
+import com.example.positivesns.response.reply.ReplyListResponse
 import com.example.positivesns.service.ReplyService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,9 +27,9 @@ class ReplyController(
 
         @RequestParam("text")
         text: String,
-    ): PostResultResponse {
+    ): UpdateProcessResponse {
         replyService.insertReply(postId, text)
-        return PostResultResponse(result = "success")
+        return UpdateProcessResponse(result = "success")
     }
 
     @GetMapping(
@@ -48,9 +48,9 @@ class ReplyController(
     fun deletePost(
         @RequestParam("replyId")
         replyId: String,
-    ): PostResultResponse {
+    ): UpdateProcessResponse {
         replyService.deleteReply(replyId)
-        return PostResultResponse(result = "success")
+        return UpdateProcessResponse(result = "success")
     }
 
     @GetMapping(
@@ -62,8 +62,8 @@ class ReplyController(
 
         @RequestParam("replyId")
         replyId: String,
-    ): PostResultResponse {
+    ): UpdateProcessResponse {
         replyService.updateReply(replyId, text)
-        return PostResultResponse(result = "success")
+        return UpdateProcessResponse(result = "success")
     }
 }

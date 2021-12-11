@@ -1,6 +1,6 @@
 package com.example.positivesns.service
 
-import com.example.positivesns.response.post.ReplyListResponse
+import com.example.positivesns.response.reply.ReplyListResponse
 
 interface ReplyService {
     fun insertReply(

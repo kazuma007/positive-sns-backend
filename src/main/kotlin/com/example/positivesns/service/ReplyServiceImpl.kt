@@ -2,7 +2,7 @@ package com.example.positivesns.service
 
 import com.example.positivesns.model.dynamo.Reply
 import com.example.positivesns.repository.ReplyRepository
-import com.example.positivesns.response.post.ReplyListResponse
+import com.example.positivesns.response.reply.ReplyListResponse
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.time.ZoneId
