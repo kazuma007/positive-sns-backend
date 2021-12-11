@@ -46,13 +46,24 @@ class PostController(
         path = ["delete"]
     )
     fun deletePost(
-        @RequestParam("userId")
-        userId: String,
+        @RequestParam("postId")
+        postId: String,
+    ): PostResultResponse {
+        postService.deletePost(postId)
+        return PostResultResponse(result = "success")
+    }
+
+    @GetMapping(
+        path = ["update"]
+    )
+    fun updatePost(
+        @RequestParam("text")
+        text: String,
 
         @RequestParam("postId")
         postId: String,
     ): PostResultResponse {
-        postService.deletePost(userId, postId)
+        postService.updatePost(postId, text)
         return PostResultResponse(result = "success")
     }
 }

@@ -13,7 +13,11 @@ interface PostService {
     ): List<PostListResponse>
 
     fun deletePost(
-        userId: String,
         postId: String,
+    )
+
+    fun updatePost(
+        postId: String,
+        text: String,
     )
 }

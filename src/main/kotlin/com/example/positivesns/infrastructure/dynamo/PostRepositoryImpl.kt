@@ -3,6 +3,7 @@ package com.example.positivesns.infrastructure.dynamo
 import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression
 import com.amazonaws.services.dynamodbv2.model.AttributeValue
 import com.example.positivesns.model.dynamo.Post
@@ -17,6 +18,10 @@ class PostRepositoryImpl : PostRepository {
 
     override fun deletePost(post: Post) {
         mapper.delete(post)
+    }
+
+    override fun updatePost(post: Post) {
+        mapper.save(post, DynamoDBMapperConfig.SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES.config())
     }
 
     override fun getPosts(): List<Post> {

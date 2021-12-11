@@ -40,24 +40,35 @@ class PostServiceImpl(
                 userId = post.userId,
                 postId = post.postId,
                 text = post.text,
-                registeredTime = ZonedDateTime.ofInstant(
-                    Instant.ofEpochMilli(post.registeredTime),
-                    ZoneId.systemDefault()
-                ),
-                updatedTime = ZonedDateTime.ofInstant(
-                    Instant.ofEpochMilli(post.updatedTime),
-                    ZoneId.systemDefault()
-                ),
+                registeredTime = post.registeredTime?.let {
+                    ZonedDateTime.ofInstant(
+                        Instant.ofEpochMilli(it),
+                        ZoneId.systemDefault()
+                    )
+                },
+                updatedTime = post.updatedTime?.let {
+                    ZonedDateTime.ofInstant(
+                        Instant.ofEpochMilli(it),
+                        ZoneId.systemDefault()
+                    )
+                },
             )
         }.sortedByDescending { it.registeredTime }
     }
 
-    override fun deletePost(userId: String, postId: String) {
+    override fun deletePost(postId: String) {
         val post = Post(
-            userId = userId,
             postId = postId,
         )
         postRepository.deletePost(post)
+    }
+
+    override fun updatePost(postId: String, text: String) {
+        val post = Post(
+            postId = postId,
+            text = text,
+        )
+        postRepository.updatePost(post)
     }
 
     fun createPost(
