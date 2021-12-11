@@ -48,7 +48,7 @@ internal class UserServiceImplTest {
                 User(
                     userId = "user-id",
                     username = "username",
-                    password = "password",
+                    password = "hashed-password",
                     registeredTime = 1639170320000,
                     updatedTime = 1639170320000,
                 )
@@ -66,7 +66,7 @@ internal class UserServiceImplTest {
                 User(
                     userId = "user-id",
                     username = "username",
-                    password = "password",
+                    password = "hashed-password",
                     registeredTime = 1639170320000,
                     updatedTime = 1639170320000,
                 )
@@ -85,46 +85,11 @@ internal class UserServiceImplTest {
             userId = "user-id",
         )
 
-        every {
-            passwordService.createHashedPassword("password")
-        } returns "hashed-password"
-
-        every {
-            datetimeService.getCurrentTime()
-        } returns ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo"))
-
-        every {
-            userRepository.insertUser(
-                User(
-                    userId = "user-id",
-                    username = "username",
-                    password = "password",
-                    registeredTime = 1639170320000,
-                    updatedTime = 1639170320000,
-                )
-            )
-        } returns Unit
-
         val actual = userService.insertUser("user-id", "username", "password")
         Assertions.assertFalse(actual)
 
         verify(exactly = 1) { userRepository.getUser("user-id") }
-        verify(exactly = 1) { passwordService.createHashedPassword("password") }
-        verify(exactly = 1) { datetimeService.getCurrentTime() }
-        verify(exactly = 1) {
-            userRepository.insertUser(
-                User(
-                    userId = "user-id",
-                    username = "username",
-                    password = "password",
-                    registeredTime = 1639170320000,
-                    updatedTime = 1639170320000,
-                )
-            )
-        }
         confirmVerified(userRepository)
-        confirmVerified(passwordService)
-        confirmVerified(datetimeService)
     }
 
     @Test
@@ -196,6 +161,74 @@ internal class UserServiceImplTest {
         Assertions.assertEquals(expected, actual)
 
         verify(exactly = 1) { userRepository.getUser("user-id") }
+        verify(exactly = 1) { passwordService.isSamePassword("password", "hashed-password") }
+        confirmVerified(userRepository)
+        confirmVerified(passwordService)
+    }
+
+    @Test
+    fun deleteUser_whenUserIdDoesNotExist() {
+        every {
+            userRepository.getUser("user-id")
+        } returns null
+
+        val actual = userService.deleteUser("user-id", "password")
+
+        Assertions.assertFalse(actual)
+
+        verify(exactly = 1) { userRepository.getUser("user-id") }
+        confirmVerified(userRepository)
+    }
+
+    @Test
+    fun deleteUser_whenPasswordDoesNotMatch() {
+        every {
+            userRepository.getUser("user-id")
+        } returns User(
+            userId = "user-id",
+            password = "hashed-password",
+        )
+
+        every {
+            passwordService.isSamePassword("password", "hashed-password")
+        } returns false
+
+        val actual = userService.deleteUser("user-id", "password")
+
+        Assertions.assertFalse(actual)
+
+        verify(exactly = 1) { userRepository.getUser("user-id") }
+        verify(exactly = 1) { passwordService.isSamePassword("password", "hashed-password") }
+        confirmVerified(userRepository)
+        confirmVerified(passwordService)
+    }
+
+    @Test
+    fun deleteUser_whenSuccess() {
+        every {
+            userRepository.getUser("user-id")
+        } returns User(
+            userId = "user-id",
+            username = "username",
+            password = "hashed-password",
+            registeredTime = 1639170320000,
+            updatedTime = 1639170320000,
+        )
+
+        every {
+            passwordService.isSamePassword("password", "hashed-password")
+        } returns true
+
+        every {
+            userRepository.deleteUser(User(userId = "user-id"))
+        } returns Unit
+
+        val actual = userService.deleteUser("user-id", "password")
+
+        Assertions.assertTrue(actual)
+
+        verify(exactly = 1) { userRepository.getUser("user-id") }
+        verify(exactly = 1) { userRepository.deleteUser(User(userId = "user-id")) }
         verify(exactly = 1) { passwordService.isSamePassword("password", "hashed-password") }
         confirmVerified(userRepository)
         confirmVerified(passwordService)
