@@ -83,18 +83,6 @@ class UserServiceImpl(
         return UserResponse(
             userId = updatedUser.userId,
             username = updatedUser.username,
-            registeredTime = updatedUser.registeredTime?.let {
-                ZonedDateTime.ofInstant(
-                    Instant.ofEpochMilli(it),
-                    ZoneId.systemDefault()
-                )
-            },
-            updatedTime = updatedUser.updatedTime?.let {
-                ZonedDateTime.ofInstant(
-                    Instant.ofEpochMilli(it),
-                    ZoneId.systemDefault()
-                )
-            },
         )
     }
 

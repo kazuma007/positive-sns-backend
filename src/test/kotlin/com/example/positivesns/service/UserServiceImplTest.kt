@@ -233,4 +233,106 @@ internal class UserServiceImplTest {
         confirmVerified(userRepository)
         confirmVerified(passwordService)
     }
+
+    @Test
+    fun updateUser_whenUserIdDoesNotExist() {
+        every {
+            userRepository.getUser("user-id")
+        } returns null
+
+        val actual = userService.updateUser(
+            "user-id",
+            "username",
+            "currentPassword",
+            "newPassword",
+        )
+
+        val expected = UserResponse()
+
+        Assertions.assertEquals(expected, actual)
+
+        verify(exactly = 1) { userRepository.getUser("user-id") }
+        confirmVerified(userRepository)
+    }
+
+    @Test
+    fun updateUser_whenPasswordDoesNotMatch() {
+        every {
+            userRepository.getUser("user-id")
+        } returns User(
+            userId = "user-id",
+            password = "hashed-password",
+        )
+
+        every {
+            passwordService.isSamePassword("currentPassword", "hashed-password")
+        } returns false
+
+        val actual = userService.updateUser(
+            "user-id",
+            "username",
+            "currentPassword",
+            "newPassword",
+        )
+
+        val expected = UserResponse()
+
+        Assertions.assertEquals(expected, actual)
+
+        verify(exactly = 1) { userRepository.getUser("user-id") }
+        verify(exactly = 1) { passwordService.isSamePassword("currentPassword", "hashed-password") }
+        confirmVerified(userRepository)
+        confirmVerified(passwordService)
+    }
+
+    @Test
+    fun updateUser_whenSuccess() {
+        every {
+            userRepository.getUser("user-id")
+        } returns User(
+            userId = "user-id",
+            username = "username",
+            password = "hashed-password",
+            registeredTime = 1639170320000,
+            updatedTime = 1639170320000,
+        )
+
+        every {
+            passwordService.isSamePassword("currentPassword", "hashed-password")
+        } returns true
+
+        every {
+            userRepository.updateUser(
+                User(
+                    userId = "user-id",
+                    username = "new-username",
+                )
+            )
+        } returns Unit
+
+        val actual = userService.updateUser(
+            "user-id",
+            "new-username",
+            "currentPassword",
+            null,
+        )
+
+        val expected = UserResponse(
+            userId = "user-id",
+            username = "new-username",
+        )
+
+        Assertions.assertEquals(expected, actual)
+
+        verify(exactly = 1) { userRepository.getUser("user-id") }
+        verify(exactly = 1) { passwordService.isSamePassword("currentPassword", "hashed-password") }
+        verify(exactly = 1) { userRepository.updateUser(
+            User(
+                userId = "user-id",
+                username = "new-username",
+            )
+        ) }
+        confirmVerified(userRepository)
+        confirmVerified(passwordService)
+    }
 }
