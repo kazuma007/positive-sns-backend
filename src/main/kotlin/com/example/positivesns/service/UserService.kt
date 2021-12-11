@@ -4,9 +4,10 @@ import com.example.positivesns.response.post.PostListResponse
 
 interface UserService {
     fun insertUser(
+        userId: String,
         username: String,
         password: String,
-    )
+    ): Int
 
     fun auth(
         username: String,

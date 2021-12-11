@@ -21,13 +21,17 @@ class UserController(
         path = ["create"]
     )
     fun createUser(
+        @RequestParam("userId")
+        userId: String,
+
         @RequestParam("username")
         username: String,
 
         @RequestParam("password")
         password: String,
     ): UpdateProcessResponse {
-        userService.insertUser(username, password)
+        val result = userService.insertUser(userId, username, password)
+        if (result < 0) return UpdateProcessResponse(result = "fail")
         return UpdateProcessResponse(result = "success")
     }
 }

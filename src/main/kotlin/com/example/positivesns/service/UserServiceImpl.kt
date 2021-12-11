@@ -12,9 +12,12 @@ class UserServiceImpl(
     private val passwordService: PasswordService,
     private val userRepository: UserRepository,
 ) : UserService {
-    override fun insertUser(username: String, password: String) {
-        val user = createUser(username, password)
-        userRepository.insertUser(user)
+    override fun insertUser(userId: String, username: String, password: String) : Int {
+        val user = userRepository.getUser(userId)
+        if (user !== null) return -999
+
+        userRepository.insertUser(createUser(userId, username, password))
+        return 1
     }
 
     override fun auth(username: String, password: String): List<PostListResponse> {
@@ -29,11 +32,11 @@ class UserServiceImpl(
         TODO("Not yet implemented")
     }
 
-    fun createUser(username: String, password: String): User {
+    fun createUser(userId: String, username: String, password: String): User {
         val datetime = datetimeService.getCurrentTime()
         val hashedPassword = passwordService.createHashedPassword(password)
         return User(
-            userId = uuidService.getUuid().replace("-", ""),
+            userId = userId,
             username = username,
             password = hashedPassword,
             registeredTime = datetime.toInstant().toEpochMilli(),

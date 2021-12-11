@@ -22,8 +22,8 @@ class UserRepositoryImpl : UserRepository {
         mapper.save(user, DynamoDBMapperConfig.SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES.config())
     }
 
-    override fun getUser(user: User): User {
-        return mapper.load(user)
+    override fun getUser(userId: String): User? {
+        return mapper.load(User::class.java, userId)
     }
 
     companion object {
