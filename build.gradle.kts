@@ -27,6 +27,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk
     implementation("com.amazonaws:aws-java-sdk:1.12.128")
 
+    // https://mvnrepository.com/artifact/at.favre.lib/bcrypt
+    implementation("at.favre.lib:bcrypt:0.9.0")
+
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

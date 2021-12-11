@@ -2,7 +2,7 @@ package com.example.positivesns.service
 
 import com.example.positivesns.model.dynamo.Post
 import com.example.positivesns.repository.PostRepository
-import com.example.positivesns.response.post.PostListResponse
+import com.example.positivesns.response.post.PostResponse
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.time.ZoneId
@@ -24,7 +24,7 @@ class PostServiceImpl(
 
     override fun getPosts(
         userId: String?,
-    ): List<PostListResponse> {
+    ): List<PostResponse> {
         val posts = if (userId.isNullOrBlank()) {
             postRepository.getPosts()
         } else {
@@ -36,7 +36,7 @@ class PostServiceImpl(
         }
 
         return posts.map { post: Post ->
-            PostListResponse(
+            PostResponse(
                 userId = post.userId,
                 postId = post.postId,
                 text = post.text,

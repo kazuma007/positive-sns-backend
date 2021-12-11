@@ -1,7 +1,7 @@
 package com.example.positivesns.controller
 
-import com.example.positivesns.response.post.PostListResponse
-import com.example.positivesns.response.post.PostResultResponse
+import com.example.positivesns.response.UpdateProcessResponse
+import com.example.positivesns.response.reply.ReplyResponse
 import com.example.positivesns.service.ReplyService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -27,9 +27,9 @@ class ReplyController(
 
         @RequestParam("text")
         text: String,
-    ): PostResultResponse {
+    ): UpdateProcessResponse {
         replyService.insertReply(postId, text)
-        return PostResultResponse(result = "success")
+        return UpdateProcessResponse(result = "success")
     }
 
     @GetMapping(
@@ -38,7 +38,7 @@ class ReplyController(
     fun getPosts(
         @RequestParam("postId")
         postId: String,
-    ): List<PostListResponse> {
+    ): List<ReplyResponse> {
         return replyService.getReplies(postId)
     }
 
@@ -46,11 +46,11 @@ class ReplyController(
         path = ["delete"]
     )
     fun deletePost(
-        @RequestParam("postId")
-        postId: String,
-    ): PostResultResponse {
-        replyService.deleteReply(postId)
-        return PostResultResponse(result = "success")
+        @RequestParam("replyId")
+        replyId: String,
+    ): UpdateProcessResponse {
+        replyService.deleteReply(replyId)
+        return UpdateProcessResponse(result = "success")
     }
 
     @GetMapping(
@@ -60,10 +60,10 @@ class ReplyController(
         @RequestParam("text")
         text: String,
 
-        @RequestParam("postId")
-        postId: String,
-    ): PostResultResponse {
-        replyService.updateReply(postId, text)
-        return PostResultResponse(result = "success")
+        @RequestParam("replyId")
+        replyId: String,
+    ): UpdateProcessResponse {
+        replyService.updateReply(replyId, text)
+        return UpdateProcessResponse(result = "success")
     }
 }
