@@ -98,6 +98,9 @@ internal class PostServiceImplTest {
 
         val actual = postService.getPosts("sample-user")
 
+        println("getPosts_withUserId")
+        println(expected)
+        println(actual)
         Assertions.assertEquals(expected, actual)
 
         verify(exactly = 1) { postRepository.getPosts("sample-user") }
@@ -145,6 +148,9 @@ internal class PostServiceImplTest {
         val userId = null
         val actual = postService.getPosts(userId)
 
+        println("getPosts_withoutUserId")
+        println(expected)
+        println(actual)
         Assertions.assertEquals(expected, actual)
 
         verify(exactly = 1) { postRepository.getPosts() }
