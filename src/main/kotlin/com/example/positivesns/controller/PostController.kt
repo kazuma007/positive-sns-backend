@@ -1,7 +1,7 @@
 package com.example.positivesns.controller
 
-import com.example.positivesns.response.post.GetPostResponse
-import com.example.positivesns.response.post.InsertPostResponse
+import com.example.positivesns.response.post.PostGetResponse
+import com.example.positivesns.response.post.PostInsertResponse
 import com.example.positivesns.service.PostService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,9 +25,9 @@ class PostController(
 
         @RequestParam("text", required = true)
         text: String,
-    ): InsertPostResponse {
+    ): PostInsertResponse {
         postService.insertPost(userId, text)
-        return InsertPostResponse(result = "success")
+        return PostInsertResponse(result = "success")
     }
 
     @GetMapping(
@@ -36,7 +36,7 @@ class PostController(
     fun getPosts(
         @RequestParam("userId", required = true)
         userId: String?,
-    ): List<GetPostResponse> {
+    ): List<PostGetResponse> {
         return postService.getPosts(userId)
     }
 }

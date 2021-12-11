@@ -15,6 +15,11 @@ class PostRepositoryImpl : PostRepository {
         mapper.save(post)
     }
 
+    override fun getPosts(): List<Post> {
+        val scanExpression = DynamoDBScanExpression()
+        return mapper.parallelScan(Post::class.java, scanExpression, 2)
+    }
+
     override fun getPosts(userId: String): List<Post> {
         val eav = HashMap<String, AttributeValue>()
         eav[":userId"] = AttributeValue().withS(userId)
