@@ -4,4 +4,5 @@ import com.example.positivesns.model.dynamo.Post
 
 interface PostRepository {
     fun insertPost(post: Post)
+    fun getPosts(userId: String) : List<Post>
 }

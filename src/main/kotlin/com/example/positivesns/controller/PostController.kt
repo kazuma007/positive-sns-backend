@@ -1,5 +1,6 @@
 package com.example.positivesns.controller
 
+import com.example.positivesns.response.post.GetPostResponse
 import com.example.positivesns.response.post.InsertPostResponse
 import com.example.positivesns.service.PostService
 import org.springframework.http.MediaType
@@ -27,5 +28,15 @@ class PostController(
     ): InsertPostResponse {
         postService.insertPost(userId, text)
         return InsertPostResponse(result = "success")
+    }
+
+    @GetMapping(
+        path = ["get"]
+    )
+    fun getPosts(
+        @RequestParam("userId", required = true)
+        userId: String?,
+    ): List<GetPostResponse> {
+        return postService.getPosts(userId)
     }
 }
