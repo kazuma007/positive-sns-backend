@@ -98,7 +98,7 @@ class UserServiceImpl(
         )
     }
 
-    fun createUser(userId: String, username: String, password: String): User {
+    private fun createUser(userId: String, username: String, password: String): User {
         val datetime = datetimeService.getCurrentTime()
         val hashedPassword = passwordService.createHashedPassword(password)
         return User(
@@ -110,7 +110,7 @@ class UserServiceImpl(
         )
     }
 
-    fun createUpdatedUser(userId: String, username: String?, newPassword: String?): User {
+    private fun createUpdatedUser(userId: String, username: String?, newPassword: String?): User {
         val hashedPassword = if (newPassword.isNullOrBlank()) {
             null
         } else {
