@@ -7,7 +7,7 @@ import java.time.ZonedDateTime
 
 @Service
 class DatetimeServiceImpl : DatetimeService {
-    override fun getCurrentTime() : ZonedDateTime {
+    override fun getCurrentTime(): ZonedDateTime {
         return LocalDateTime.now().atZone(ZoneId.systemDefault())
     }
 }
