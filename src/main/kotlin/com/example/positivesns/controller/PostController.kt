@@ -20,10 +20,10 @@ class PostController(
     // TODO PostMappingに変更する
     @GetMapping
     fun insertPost(
-        @RequestParam("userId", required = true)
+        @RequestParam("userId")
         userId: String,
 
-        @RequestParam("text", required = true)
+        @RequestParam("text")
         text: String,
     ): PostInsertResponse {
         postService.insertPost(userId, text)
@@ -34,7 +34,7 @@ class PostController(
         path = ["get"]
     )
     fun getPosts(
-        @RequestParam("userId", required = true)
+        @RequestParam("userId")
         userId: String?,
     ): List<PostGetResponse> {
         return postService.getPosts(userId)

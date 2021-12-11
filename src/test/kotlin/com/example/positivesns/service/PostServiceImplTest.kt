@@ -82,17 +82,17 @@ internal class PostServiceImplTest {
         val expected = listOf(
             PostGetResponse(
                 userId = "sample-user",
-                text = "sample test 1",
-                postId = "41b28baf93374cf5849b4076c56783dd",
-                registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo")),
-                updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo")),
-            ),
-            PostGetResponse(
-                userId = "sample-user",
                 text = "sample test 2",
                 postId = "5849b4076c56783dd41b28baf93374cf",
                 registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
                 updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
+            ),
+            PostGetResponse(
+                userId = "sample-user",
+                text = "sample test 1",
+                postId = "41b28baf93374cf5849b4076c56783dd",
+                registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo")),
+                updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo")),
             ),
         )
 
@@ -127,18 +127,18 @@ internal class PostServiceImplTest {
 
         val expected = listOf(
             PostGetResponse(
-                userId = "sample-user-1",
-                text = "sample test 1",
-                postId = "41b28baf93374cf5849b4076c56783dd",
-                registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo")),
-                updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo")),
-            ),
-            PostGetResponse(
                 userId = "sample-user-2",
                 text = "sample test 2",
                 postId = "5849b4076c56783dd41b28baf93374cf",
                 registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
                 updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
+            ),
+            PostGetResponse(
+                userId = "sample-user-1",
+                text = "sample test 1",
+                postId = "41b28baf93374cf5849b4076c56783dd",
+                registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo")),
+                updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 20, 0, ZoneId.of("Asia/Tokyo")),
             ),
         )
 

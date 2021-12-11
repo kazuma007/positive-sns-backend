@@ -35,7 +35,7 @@ class PostServiceImpl(
             return emptyList()
         }
 
-        return posts.map { post: Post ->
+        val postResponseList = posts.map { post: Post ->
             PostGetResponse(
                 userId = post.userId,
                 postId = post.postId,
@@ -50,6 +50,8 @@ class PostServiceImpl(
                 ),
             )
         }
+
+        return postResponseList.sortedByDescending { it.registeredTime }
     }
 
     fun createPost(
