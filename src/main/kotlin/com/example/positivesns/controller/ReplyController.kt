@@ -46,10 +46,10 @@ class ReplyController(
         path = ["delete"]
     )
     fun deletePost(
-        @RequestParam("postId")
-        postId: String,
+        @RequestParam("replyId")
+        replyId: String,
     ): PostResultResponse {
-        replyService.deleteReply(postId)
+        replyService.deleteReply(replyId)
         return PostResultResponse(result = "success")
     }
 

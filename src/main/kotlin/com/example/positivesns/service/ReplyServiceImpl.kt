@@ -51,7 +51,10 @@ class ReplyServiceImpl(
     }
 
     override fun deleteReply(replyId: String) {
-        TODO("Not yet implemented")
+        val reply = Reply(
+            replyId = replyId,
+        )
+        replyRepository.deleteReply(reply)
     }
 
     override fun updateReply(replyId: String, text: String) {
