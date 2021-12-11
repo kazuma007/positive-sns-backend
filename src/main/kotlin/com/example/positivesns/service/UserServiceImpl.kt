@@ -14,7 +14,7 @@ class UserServiceImpl(
     private val passwordService: PasswordService,
     private val userRepository: UserRepository,
 ) : UserService {
-    override fun insertUser(userId: String, username: String, password: String) : Boolean {
+    override fun insertUser(userId: String, username: String, password: String): Boolean {
         val user = userRepository.getUser(userId)
         if (user !== null) return false
 
@@ -24,10 +24,9 @@ class UserServiceImpl(
 
     override fun auth(userId: String, password: String): UserResponse {
         val user = userRepository.getUser(userId) ?: return UserResponse()
-        val result = user.password?.let { passwordService.isSamePassword(password, it) }
 
-        // if the password does not match with the one registered in DB
-        if ((result == null) || !result) {
+        val result = isValidUser(user, password)
+        if (!result) {
             return UserResponse()
         }
 
@@ -49,12 +48,11 @@ class UserServiceImpl(
         )
     }
 
-    override fun deleteUser(userId: String, password: String) : Boolean {
+    override fun deleteUser(userId: String, password: String): Boolean {
         val user = userRepository.getUser(userId) ?: return false
-        val result = user.password?.let { passwordService.isSamePassword(password, it) }
 
-        // if the password does not match with the one registered in DB
-        if ((result == null) || !result) {
+        val result = isValidUser(user, password)
+        if (!result) {
             return false
         }
 
@@ -65,16 +63,16 @@ class UserServiceImpl(
         return true
     }
 
-    override fun updateUser(userId: String,
-                            username: String?,
-                            currentPassword: String,
-                            newPassword: String?,
+    override fun updateUser(
+        userId: String,
+        username: String?,
+        currentPassword: String,
+        newPassword: String?,
     ): UserResponse {
         val user = userRepository.getUser(userId) ?: return UserResponse()
-        val result = user.password?.let { passwordService.isSamePassword(currentPassword, it) }
 
-        // if the password does not match with the one registered in DB
-        if ((result == null) || !result) {
+        val result = isValidUser(user, currentPassword)
+        if (!result) {
             return UserResponse()
         }
 
@@ -84,6 +82,17 @@ class UserServiceImpl(
             userId = updatedUser.userId,
             username = updatedUser.username,
         )
+    }
+
+    private fun isValidUser(user: User, password: String): Boolean {
+        val result = user.password?.let { passwordService.isSamePassword(password, it) }
+
+        // if the password does not match with the one registered in DB
+        if ((result == null) || !result) {
+            return false
+        }
+
+        return true
     }
 
     private fun createUser(userId: String, username: String, password: String): User {
