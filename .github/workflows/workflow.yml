@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Test and Build with Gradle
-        uses: ./.github/workflows/build/
+        uses: ./.github/workflows/docker-build/
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
