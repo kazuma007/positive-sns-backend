@@ -20,7 +20,7 @@ jobs:
       - name: Grant Permissions to gradlew
         run: chmod +x gradlew
       - name: Test
-        run: ./gradlew test --stacktrace
+        run: ./gradlew test --stacktrace --scan
 
       - if: always()
         name: Upload test result
