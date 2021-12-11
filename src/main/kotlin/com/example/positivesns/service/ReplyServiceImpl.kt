@@ -2,8 +2,11 @@ package com.example.positivesns.service
 
 import com.example.positivesns.model.dynamo.Reply
 import com.example.positivesns.repository.ReplyRepository
-import com.example.positivesns.response.post.PostListResponse
+import com.example.positivesns.response.post.ReplyListResponse
 import org.springframework.stereotype.Service
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 @Service
 class ReplyServiceImpl(
@@ -19,8 +22,32 @@ class ReplyServiceImpl(
         replyRepository.insertReply(reply)
     }
 
-    override fun getReplies(postId: String): List<PostListResponse> {
-        TODO("Not yet implemented")
+    override fun getReplies(postId: String): List<ReplyListResponse> {
+        val replies = replyRepository.getReplies(postId)
+
+        if (replies.isEmpty()) {
+            return emptyList()
+        }
+
+        return replies.map { reply ->
+            ReplyListResponse(
+                postId = reply.postId,
+                replyId = reply.replyId,
+                text = reply.text,
+                registeredTime = reply.registeredTime?.let {
+                    ZonedDateTime.ofInstant(
+                        Instant.ofEpochMilli(it),
+                        ZoneId.systemDefault()
+                    )
+                },
+                updatedTime = reply.updatedTime?.let {
+                    ZonedDateTime.ofInstant(
+                        Instant.ofEpochMilli(it),
+                        ZoneId.systemDefault()
+                    )
+                },
+            )
+        }.sortedByDescending { it.registeredTime }
     }
 
     override fun deleteReply(replyId: String) {

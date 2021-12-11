@@ -6,6 +6,5 @@ interface ReplyRepository {
     fun insertReply(reply: Reply)
     fun deleteReply(reply: Reply)
     fun updateReply(reply: Reply)
-    fun getReplies(): List<Reply>
-    fun getReplies(userId: String): List<Reply>
+    fun getReplies(postId: String): List<Reply>
 }

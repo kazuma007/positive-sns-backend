@@ -1,6 +1,6 @@
 package com.example.positivesns.service
 
-import com.example.positivesns.response.post.PostListResponse
+import com.example.positivesns.response.post.ReplyListResponse
 
 interface ReplyService {
     fun insertReply(
@@ -10,7 +10,7 @@ interface ReplyService {
 
     fun getReplies(
         postId: String,
-    ): List<PostListResponse>
+    ): List<ReplyListResponse>
 
     fun deleteReply(
         replyId: String,

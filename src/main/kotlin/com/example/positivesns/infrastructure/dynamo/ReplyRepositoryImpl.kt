@@ -24,17 +24,12 @@ class ReplyRepositoryImpl : ReplyRepository {
         mapper.save(reply, DynamoDBMapperConfig.SaveBehavior.UPDATE_SKIP_NULL_ATTRIBUTES.config())
     }
 
-    override fun getReplies(): List<Reply> {
-        val scanExpression = DynamoDBScanExpression()
-        return mapper.parallelScan(Reply::class.java, scanExpression, 2)
-    }
-
-    override fun getReplies(userId: String): List<Reply> {
+    override fun getReplies(postId: String): List<Reply> {
         val eav = HashMap<String, AttributeValue>()
-        eav[":userId"] = AttributeValue().withS(userId)
+        eav[":postId"] = AttributeValue().withS(postId)
 
         val scanExpression = DynamoDBScanExpression()
-            .withFilterExpression("user_id = :userId")
+            .withFilterExpression("post_id = :postId")
             .withExpressionAttributeValues(eav)
 
         return mapper.parallelScan(Reply::class.java, scanExpression, 2)
