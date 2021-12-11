@@ -1,0 +1,22 @@
+name: SpringBoot CI with Gradle
+
+on: [pull_request, push]
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test and Build with Gradle
+        uses: ./.github/workflows/build/
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: demo.zip
+          path: build/libs/demo-0.0.1-SNAPSHOT.jar
+      - name: Archive test reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports.zip
+          path: build/reports/tests/test

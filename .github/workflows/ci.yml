@@ -17,10 +17,11 @@ jobs:
           java-version: 11
           distribution: 'adopt'
 
-      - name: Clean
-        run: ./gradlew clean
-      - name: Test
-        run: ./gradlew test --stacktrace --scan
+      - name: Make gradle wrapper executable
+        run: chmod +x gradlew
+
+      - name: Run Unit Tests
+        run: ./gradlew clean test --scan
 
       - if: always()
         name: Upload test result
