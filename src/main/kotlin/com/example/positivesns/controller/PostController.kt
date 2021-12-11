@@ -1,6 +1,6 @@
 package com.example.positivesns.controller
 
-import com.example.positivesns.response.post.PostListResponse
+import com.example.positivesns.response.post.PostResponse
 import com.example.positivesns.response.UpdateProcessResponse
 import com.example.positivesns.service.PostService
 import org.springframework.http.MediaType
@@ -38,7 +38,7 @@ class PostController(
     fun getPosts(
         @RequestParam("userId")
         userId: String?,
-    ): List<PostListResponse> {
+    ): List<PostResponse> {
         return postService.getPosts(userId)
     }
 

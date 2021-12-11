@@ -2,7 +2,7 @@ package com.example.positivesns.service
 
 import com.example.positivesns.model.dynamo.Reply
 import com.example.positivesns.repository.ReplyRepository
-import com.example.positivesns.response.reply.ReplyListResponse
+import com.example.positivesns.response.reply.ReplyResponse
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
@@ -80,14 +80,14 @@ internal class ReplyServiceImplTest {
         )
 
         val expected = listOf(
-            ReplyListResponse(
+            ReplyResponse(
                 replyId = "41b28baf93374cf5849b4076c56783dd",
                 text = "sample test",
                 postId = "5849b4076c56783dd41b28baf93374cf",
                 registeredTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
                 updatedTime = ZonedDateTime.of(2021, 12, 11, 6, 5, 30, 0, ZoneId.of("Asia/Tokyo")),
             ),
-            ReplyListResponse(
+            ReplyResponse(
                 replyId = "28baf93374cf5849b4076c56783dd41b",
                 text = "sample test",
                 postId = "5849b4076c56783dd41b28baf93374cf",

@@ -1,9 +1,9 @@
-package com.example.positivesns.response.reply
+package com.example.positivesns.response.post
 
 import java.time.ZonedDateTime
 
-data class ReplyListResponse(
-    var replyId: String = "",
+data class PostResponse(
+    var userId: String = "",
     var postId: String = "",
     var text: String = "",
     var registeredTime: ZonedDateTime? = null,

@@ -1,7 +1,7 @@
 package com.example.positivesns.controller
 
 import com.example.positivesns.response.UpdateProcessResponse
-import com.example.positivesns.response.reply.ReplyListResponse
+import com.example.positivesns.response.reply.ReplyResponse
 import com.example.positivesns.service.ReplyService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -38,7 +38,7 @@ class ReplyController(
     fun getPosts(
         @RequestParam("postId")
         postId: String,
-    ): List<ReplyListResponse> {
+    ): List<ReplyResponse> {
         return replyService.getReplies(postId)
     }
 

@@ -2,7 +2,7 @@ package com.example.positivesns.service
 
 import com.example.positivesns.model.dynamo.Reply
 import com.example.positivesns.repository.ReplyRepository
-import com.example.positivesns.response.reply.ReplyListResponse
+import com.example.positivesns.response.reply.ReplyResponse
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.time.ZoneId
@@ -22,7 +22,7 @@ class ReplyServiceImpl(
         replyRepository.insertReply(reply)
     }
 
-    override fun getReplies(postId: String): List<ReplyListResponse> {
+    override fun getReplies(postId: String): List<ReplyResponse> {
         val replies = replyRepository.getReplies(postId)
 
         if (replies.isEmpty()) {
@@ -30,7 +30,7 @@ class ReplyServiceImpl(
         }
 
         return replies.map { reply ->
-            ReplyListResponse(
+            ReplyResponse(
                 postId = reply.postId,
                 replyId = reply.replyId,
                 text = reply.text,
