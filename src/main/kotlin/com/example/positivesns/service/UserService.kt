@@ -1,6 +1,6 @@
 package com.example.positivesns.service
 
-import com.example.positivesns.response.post.PostListResponse
+import com.example.positivesns.response.user.UserResponse
 
 interface UserService {
     fun insertUser(
@@ -10,9 +10,9 @@ interface UserService {
     ): Int
 
     fun auth(
-        username: String,
+        userId: String,
         password: String,
-    ): List<PostListResponse>
+    ): UserResponse
 
     fun deleteUser(
         userId: String,

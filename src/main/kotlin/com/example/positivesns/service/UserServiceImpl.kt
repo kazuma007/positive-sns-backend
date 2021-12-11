@@ -2,13 +2,15 @@ package com.example.positivesns.service
 
 import com.example.positivesns.model.dynamo.User
 import com.example.positivesns.repository.UserRepository
-import com.example.positivesns.response.post.PostListResponse
+import com.example.positivesns.response.user.UserResponse
 import org.springframework.stereotype.Service
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 @Service
 class UserServiceImpl(
     private val datetimeService: DatetimeService,
-    private val uuidService: UuidService,
     private val passwordService: PasswordService,
     private val userRepository: UserRepository,
 ) : UserService {
@@ -20,8 +22,31 @@ class UserServiceImpl(
         return 1
     }
 
-    override fun auth(username: String, password: String): List<PostListResponse> {
-        TODO("Not yet implemented")
+    override fun auth(userId: String, password: String): UserResponse {
+        val user = userRepository.getUser(userId) ?: return UserResponse()
+        val result = passwordService.isSamePassword(password, user.password)
+
+        // if the password does not match with the one registered in DB
+        if (!result) {
+            return UserResponse()
+        }
+
+        return UserResponse(
+            userId = user.userId,
+            username = user.username,
+            registeredTime = user.registeredTime?.let {
+                ZonedDateTime.ofInstant(
+                    Instant.ofEpochMilli(it),
+                    ZoneId.systemDefault()
+                )
+            },
+            updatedTime = user.updatedTime?.let {
+                ZonedDateTime.ofInstant(
+                    Instant.ofEpochMilli(it),
+                    ZoneId.systemDefault()
+                )
+            },
+        )
     }
 
     override fun deleteUser(userId: String) {

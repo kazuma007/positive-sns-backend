@@ -1,6 +1,7 @@
 package com.example.positivesns.controller
 
 import com.example.positivesns.response.UpdateProcessResponse
+import com.example.positivesns.response.user.UserResponse
 import com.example.positivesns.service.UserService
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
@@ -33,5 +34,18 @@ class UserController(
         val result = userService.insertUser(userId, username, password)
         if (result < 0) return UpdateProcessResponse(result = "fail")
         return UpdateProcessResponse(result = "success")
+    }
+
+    @GetMapping(
+        path = ["auth"]
+    )
+    fun auth(
+        @RequestParam("userId")
+        userId: String,
+
+        @RequestParam("password")
+        password: String,
+    ): UserResponse? {
+        return userService.auth(userId, password)
     }
 }
