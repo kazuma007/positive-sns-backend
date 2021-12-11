@@ -55,7 +55,11 @@ class ReplyServiceImpl(
     }
 
     override fun updateReply(replyId: String, text: String) {
-        TODO("Not yet implemented")
+        val reply = Reply(
+            replyId = replyId,
+            text = text,
+        )
+        replyRepository.updateReply(reply)
     }
 
     fun createReply(

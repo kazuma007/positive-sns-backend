@@ -60,10 +60,10 @@ class ReplyController(
         @RequestParam("text")
         text: String,
 
-        @RequestParam("postId")
-        postId: String,
+        @RequestParam("replyId")
+        replyId: String,
     ): PostResultResponse {
-        replyService.updateReply(postId, text)
+        replyService.updateReply(replyId, text)
         return PostResultResponse(result = "success")
     }
 }
