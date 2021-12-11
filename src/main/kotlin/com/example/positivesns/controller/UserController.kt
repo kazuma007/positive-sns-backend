@@ -45,7 +45,26 @@ class UserController(
 
         @RequestParam("password")
         password: String,
-    ): UserResponse? {
+    ): UserResponse {
         return userService.auth(userId, password)
+    }
+
+    @GetMapping(
+        path = ["update"]
+    )
+    fun updateUser(
+        @RequestParam("userId")
+        userId: String,
+
+        @RequestParam("username")
+        username: String?,
+
+        @RequestParam("currentPassword")
+        currentPassword: String,
+
+        @RequestParam("newPassword")
+        newPassword: String,
+    ): UserResponse {
+        return userService.updateUser(userId, username, currentPassword, newPassword)
     }
 }

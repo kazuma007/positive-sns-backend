@@ -10,10 +10,10 @@ data class User(
     var userId: String = "",
 
     @DynamoDBAttribute(attributeName = "username")
-    var username: String = "",
+    var username: String? = null,
 
     @DynamoDBAttribute(attributeName = "password")
-    var password: String = "",
+    var password: String? = null,
 
     @DynamoDBAttribute(attributeName = "registered_time")
     var registeredTime: Long? = null,

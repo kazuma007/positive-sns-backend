@@ -24,10 +24,10 @@ class UserServiceImpl(
 
     override fun auth(userId: String, password: String): UserResponse {
         val user = userRepository.getUser(userId) ?: return UserResponse()
-        val result = passwordService.isSamePassword(password, user.password)
+        val result = user.password?.let { passwordService.isSamePassword(password, it) }
 
         // if the password does not match with the one registered in DB
-        if (!result) {
+        if ((result == null) || !result) {
             return UserResponse()
         }
 
@@ -53,8 +53,37 @@ class UserServiceImpl(
         TODO("Not yet implemented")
     }
 
-    override fun updateUser(userId: String, username: String, password: String) {
-        TODO("Not yet implemented")
+    override fun updateUser(userId: String,
+                            username: String?,
+                            currentPassword: String,
+                            newPassword: String?,
+    ): UserResponse {
+        val user = userRepository.getUser(userId) ?: return UserResponse()
+        val result = user.password?.let { passwordService.isSamePassword(currentPassword, it) }
+
+        // if the password does not match with the one registered in DB
+        if ((result == null) || !result) {
+            return UserResponse()
+        }
+
+        val updatedUser = createUpdatedUser(userId, username, newPassword)
+        userRepository.updateUser(updatedUser)
+        return UserResponse(
+            userId = updatedUser.userId,
+            username = updatedUser.username,
+            registeredTime = updatedUser.registeredTime?.let {
+                ZonedDateTime.ofInstant(
+                    Instant.ofEpochMilli(it),
+                    ZoneId.systemDefault()
+                )
+            },
+            updatedTime = updatedUser.updatedTime?.let {
+                ZonedDateTime.ofInstant(
+                    Instant.ofEpochMilli(it),
+                    ZoneId.systemDefault()
+                )
+            },
+        )
     }
 
     fun createUser(userId: String, username: String, password: String): User {
@@ -66,6 +95,19 @@ class UserServiceImpl(
             password = hashedPassword,
             registeredTime = datetime.toInstant().toEpochMilli(),
             updatedTime = datetime.toInstant().toEpochMilli(),
+        )
+    }
+
+    fun createUpdatedUser(userId: String, username: String?, newPassword: String?): User {
+        val hashedPassword = if (newPassword.isNullOrBlank()) {
+            null
+        } else {
+            passwordService.createHashedPassword(newPassword)
+        }
+        return User(
+            userId = userId,
+            username = username,
+            password = hashedPassword,
         )
     }
 }

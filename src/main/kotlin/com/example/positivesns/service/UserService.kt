@@ -20,7 +20,8 @@ interface UserService {
 
     fun updateUser(
         userId: String,
-        username: String,
-        password: String,
-    )
+        username: String?,
+        currentPassword: String,
+        newPassword: String?,
+    ): UserResponse
 }
